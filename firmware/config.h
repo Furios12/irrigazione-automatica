@@ -12,7 +12,7 @@
 #define FIRMWARE_VERSION  "1.0.0"
 // URL del file update.json sul tuo server (es. GitHub raw, server personale, ecc.)
 // Lascia "" per disabilitare il controllo automatico
-#define OTA_CHECK_URL     "https://raw.githubusercontent.com/Furios12/irrigazione-automatica/refs/heads/main/update.json"
+#define OTA_CHECK_URL     "https://raw.githubusercontent.com/Furios12/irrigazione-automatica/refs/heads/main/firmware/update.json"
 // Controlla aggiornamenti ogni X ore (0 = solo all'avvio)
 #define OTA_CHECK_HOURS   0
 

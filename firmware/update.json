@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "notes": "Prima release stabile",
-  "bin_url": "https://github.com/Furios12/irrigazione-automatica/releases/download/v1.0.3/firmware.bin",
+  "bin_url": "https://github.com/Furios12/irrigazione-automatica/releases/download/v1.0.0/firmware.bin",
   "size": 0,
   "mandatory": false,
   "released": "2026-08-07"
