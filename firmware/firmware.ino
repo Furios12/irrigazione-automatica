@@ -232,6 +232,17 @@ class PassCallback : public BLECharacteristicCallbacks {
 
 void startBLE() {
   Serial.println("[BLE] Avvio BLE...");
+
+  // Reset completo dello stato BLE prima di reinizializzare
+  bleServer  = nullptr;
+  charSSID   = nullptr;
+  charPass   = nullptr;
+  charStatus = nullptr;
+  bleConnected = false;
+  credReceived = false;
+
+  delay(200);  // Lascia tempo al sistema di stabilizzarsi
+
   BLEDevice::init(BLE_SERVICE_NAME);
   bleServer = BLEDevice::createServer();
   bleServer->setCallbacks(new BLEConnectCB());
@@ -566,6 +577,21 @@ void handleOTAUpload() {
   }
 }
 
+void handleFactoryReset() {
+  Serial.println("[RESET] Factory reset richiesto dalla UI web");
+  server.send(200, "text/plain", "OK");
+  delay(300);
+
+  // Cancella tutto il namespace preferences
+  prefs.begin(PREF_NAMESPACE, false);
+  prefs.clear();
+  prefs.end();
+
+  Serial.println("[RESET] NVS cancellata. Riavvio in modalità BLE...");
+  delay(200);
+  ESP.restart();
+}
+
 void handleNotFound() {
   server.send(404, "text/plain", "Not found");
 }
@@ -674,6 +700,7 @@ void startWebServer() {
   server.on("/update",      HTTP_POST, handleOTAUpdate, handleOTAUpload);
   server.on("/update-info", HTTP_GET,  handleUpdateInfo);
   server.on("/ota-github",  HTTP_POST, handleOTAGitHub);
+  server.on("/factory-reset", HTTP_POST, handleFactoryReset);
   server.onNotFound(handleNotFound);
   server.begin();
 
@@ -795,12 +822,10 @@ void loop() {
         Serial.println("[BOOT] Configurazione completata!");
       } else {
         
-        Serial.println("[WiFi] Credenziali errate, riavvio BLE...");
+        Serial.println("[WiFi] Credenziali errate, riavvio per tornare in modalità BLE...");
         WiFi.disconnect(true);
-        pendingSSID = "";
-        pendingPass = "";
-        deviceState = STATE_BLE_WAIT;
-        startBLE();
+        delay(500);
+        ESP.restart();  // Più sicuro che reinizializzare BLE a caldo
       }
     }
     return; 

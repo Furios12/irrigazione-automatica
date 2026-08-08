@@ -14,7 +14,7 @@
 // Lascia "" per disabilitare il controllo automatico
 #define OTA_CHECK_URL     "https://raw.githubusercontent.com/Furios12/irrigazione-automatica/refs/heads/main/firmware/update.json"
 // Controlla aggiornamenti ogni X ore (0 = solo all'avvio)
-#define OTA_CHECK_HOURS   0
+#define OTA_CHECK_HOURS   1
 
 // ================= BLE =================
 #define BLE_SERVICE_NAME "IrrigaESP32" // Nome BLE

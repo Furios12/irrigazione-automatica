@@ -47,6 +47,14 @@ progress::-webkit-progress-bar{background:#1e293b}
 progress::-webkit-progress-value{background:#38bdf8}
 #ota-dl-pct,#opct{text-align:center;font-size:.75rem;color:#475569;margin-top:4px}
 .ver{text-align:center;font-size:.7rem;color:#2d3f55;margin-top:10px;padding-bottom:4px}
+.btn-reset{background:#7f1d1d;color:#fca5a5;border:1px solid #991b1b}.btn-reset:hover{background:#991b1b;color:#fee2e2}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;align-items:center;justify-content:center}
+.modal-overlay.show{display:flex}
+.modal{background:#1e293b;border:1px solid #991b1b;border-radius:10px;padding:20px;max-width:300px;width:90%;text-align:center}
+.modal h3{color:#f87171;font-size:.95rem;margin-bottom:10px}
+.modal p{font-size:.8rem;color:#94a3b8;margin-bottom:16px;line-height:1.5}
+.modal-btns{display:flex;gap:8px}
+.modal-btns .btn{margin-top:0;flex:1}
 </style>
 </head>
 <body>
@@ -95,6 +103,25 @@ progress::-webkit-progress-value{background:#38bdf8}
 <button class="btn bp" onclick="doOTA()">Carica file .bin</button>
 <div id="op"><progress id="ob" value="0" max="100"></progress><div id="opct">0%</div></div>
 <div id="os" class="msg"></div>
+</div>
+
+<div class="card">
+<h2>&#9888; Reset dispositivo</h2>
+<p style="font-size:.78rem;color:#94a3b8;margin-bottom:6px">Cancella le credenziali WiFi e ripristina le impostazioni di fabbrica. Il dispositivo si riavvierà in modalità BLE.</p>
+<button class="btn btn-reset" onclick="openResetModal()">&#128465; Reset impostazioni</button>
+<div id="rs" class="msg"></div>
+</div>
+
+<!-- Modal di conferma reset -->
+<div class="modal-overlay" id="reset-modal">
+  <div class="modal">
+    <h3>&#9888; Conferma Reset</h3>
+    <p>Verranno cancellati i dati WiFi e tutte le impostazioni. Il dispositivo si riavvierà in modalità BLE.<br><br>Sei sicuro?</p>
+    <div class="modal-btns">
+      <button class="btn bs" onclick="closeResetModal()">Annulla</button>
+      <button class="btn btn-reset" onclick="doReset()">Reset</button>
+    </div>
+  </div>
 </div>
 
 <p class="ver">Developed By Furios121 | Irrigatore Automatico | %VERSION%</p>
@@ -173,6 +200,19 @@ function uploadBin(file,msgId,progId,barId,pctId){
   x.onload=function(){msg(msgId,x.status===200?'Completato! Riavvio...':'Errore: '+x.responseText,x.status===200);};
   x.onerror=function(){msg(msgId,'Errore rete',false);};
   x.send(fd);
+}
+
+function openResetModal(){document.getElementById('reset-modal').classList.add('show');}
+function closeResetModal(){document.getElementById('reset-modal').classList.remove('show');}
+function doReset(){
+  closeResetModal();
+  msg('rs','Reset in corso...',true);
+  fetch('/factory-reset',{method:'POST'})
+  .then(function(r){return r.text();})
+  .then(function(r){
+    if(r==='OK'){msg('rs','Reset effettuato. Riavvio in corso...',true);}
+    else{msg('rs','Errore: '+r,false);}
+  }).catch(function(){msg('rs','Errore di rete',false);});
 }
 
 function checkUpdate(){
