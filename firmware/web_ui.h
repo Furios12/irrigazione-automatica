@@ -22,6 +22,8 @@ h1 small{font-size:.7rem;display:block;color:#475569;margin-top:2px}
 label{display:block;font-size:.78rem;color:#94a3b8;margin-bottom:4px;margin-top:8px}
 label:first-of-type{margin-top:0}
 input[type=number],input[type=time]{width:100%;padding:7px 10px;background:#0f172a;border:1px solid #334155;border-radius:6px;color:#e2e8f0;font-size:.9rem}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+input[type=number]{-moz-appearance:textfield}
 input:focus{outline:none;border-color:#38bdf8}
 .row{display:flex;gap:8px}
 .row>*{flex:1}
@@ -90,7 +92,7 @@ progress::-webkit-progress-value{background:#38bdf8}
 <div class="row" style="align-items:flex-end">
   <div><label>Durata (s)</label><input type="number" id="md" min="1" max="3600" value="30"></div>
   <div style="display:flex;flex-direction:column;gap:4px">
-    <button class="btn bw" style="margin-top:18px" onclick="startM()">Avvia</button>
+    <button class="btn bw" type="button" id="m-start" style="margin-top:18px" onclick="startM()">Avvia</button>
     <button class="btn bs" style="margin-top:4px" onclick="stopP()">Stop</button>
   </div>
 </div>
@@ -144,8 +146,11 @@ function saveIrrig(){
 }
 
 function startM(){
+  var btn=document.getElementById('m-start');
+  btn.disabled=true;
   fetch('/pump-start?dur='+document.getElementById('md').value)
-  .then(function(r){return r.text();}).then(function(r){msg('ps',r==='OK'?'Avviata!':'Err: '+r,r==='OK');}).catch(function(){msg('ps','Errore rete',false);});
+  .then(function(r){return r.text();}).then(function(r){msg('ps',r==='OK'?'Avviata!':'Err: '+r,r==='OK');}).catch(function(){msg('ps','Errore rete',false);})
+  .finally(function(){btn.disabled=false;});
 }
 
 function stopP(){

@@ -9,7 +9,7 @@
 #define PUMP_PIN   33  // Pompa
 
 // ================= FIRMWARE =================
-#define FIRMWARE_VERSION  "1.0.0"
+#define FIRMWARE_VERSION  "1.0.1"
 // URL del file update.json sul tuo server (es. GitHub raw, server personale, ecc.)
 // Lascia "" per disabilitare il controllo automatico
 #define OTA_CHECK_URL     "https://raw.githubusercontent.com/Furios12/irrigazione-automatica/refs/heads/main/firmware/update.json"
