@@ -29,11 +29,11 @@ Firmware per ESP32 che gestisce un sistema di irrigazione automatica con control
 
 | Pin | Colore | Funzione |
 |-----|--------|----------|
-| 25  | 🔴 Rosso  | LED stato errore / WiFi |
-| 26  | 🟡 Giallo 1 | LED aggiornamento |
-| 27  | 🟡 Giallo 2 | LED aggiornamento |
-| 14  | 🟢 Verde  | LED operativo |
-| 12  | 🔵 Blu    | LED connessione WiFi |
+| 02  | 🔴 Rosso  | LED stato errore / WiFi |
+| 32  | 🟡 Giallo 1 | LED aggiornamento |
+| 04  | 🟡 Giallo 2 | LED aggiornamento |
+| 25  | 🟢 Verde  | LED operativo |
+| 27  | 🔵 Blu    | LED connessione WiFi |
 | 33  | —       | Pompa (segnale relè) |
 
 ---
