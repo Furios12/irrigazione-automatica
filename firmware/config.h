@@ -1,15 +1,15 @@
 #pragma once
 
 // ================= PIN =================
-#define LED_RED    25  // Rosso
-#define LED_Y1     26  // Giallo 1
-#define LED_Y2     27  // Giallo 2
-#define LED_GREEN  14  // Verde
-#define LED_BLUE   12  // Blu
+#define LED_RED    2  // Rosso
+#define LED_Y1     32  // Giallo 1
+#define LED_Y2     4  // Giallo 2
+#define LED_GREEN  25  // Verde
+#define LED_BLUE   27  // Blu
 #define PUMP_PIN   33  // Pompa
 
 // ================= FIRMWARE =================
-#define FIRMWARE_VERSION  "1.0.1"
+#define FIRMWARE_VERSION  "1.0.2"
 // URL del file update.json sul tuo server (es. GitHub raw, server personale, ecc.)
 // Lascia "" per disabilitare il controllo automatico
 #define OTA_CHECK_URL     "https://raw.githubusercontent.com/Furios12/irrigazione-automatica/refs/heads/main/firmware/update.json"
